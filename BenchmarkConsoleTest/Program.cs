@@ -4,7 +4,7 @@ using BenchmarkDotNet.Running;
 using Tony.BenchmarkDotnet.Jetbrains;
 
 BenchmarkRunner.Run<BenchmarkTest>(DefaultConfig.Instance
-    .WithJetbrains(JetbrainsProduct.Memory));
+    .WithJetbrains(JetbrainsProduct.Trace));
 
 public class BenchmarkTest
 {
