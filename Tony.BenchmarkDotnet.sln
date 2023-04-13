@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tony.BenchmarkDotnet.Jetbrains", "Tony.BenchmarkDotnet.Jetbrains\Tony.BenchmarkDotnet.Jetbrains.csproj", "{0B0C5C55-BA29-4825-8731-ADA9A724C622}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkConsoleTest", "BenchmarkConsoleTest\BenchmarkConsoleTest.csproj", "{32BCC41B-98FA-4F6C-B25D-4E8FD310C4BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B0C5C55-BA29-4825-8731-ADA9A724C622}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B0C5C55-BA29-4825-8731-ADA9A724C622}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B0C5C55-BA29-4825-8731-ADA9A724C622}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B0C5C55-BA29-4825-8731-ADA9A724C622}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32BCC41B-98FA-4F6C-B25D-4E8FD310C4BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32BCC41B-98FA-4F6C-B25D-4E8FD310C4BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32BCC41B-98FA-4F6C-B25D-4E8FD310C4BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32BCC41B-98FA-4F6C-B25D-4E8FD310C4BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
