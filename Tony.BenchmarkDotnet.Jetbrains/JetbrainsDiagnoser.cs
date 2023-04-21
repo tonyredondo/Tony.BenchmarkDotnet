@@ -78,6 +78,7 @@ internal class JetbrainsDiagnoser : IDiagnoser
                     DotTrace.StopCollectingData();
                     DotTrace.SaveData();
                     _filePath = DotTrace.GetCollectedSnapshotFilesArchive(true);
+                    DotTrace.Detach();
                     break;
             }
         }
