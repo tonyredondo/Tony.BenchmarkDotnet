@@ -20,13 +20,13 @@ internal class JetbrainsDiagnoser : IDiagnoser
     public IEnumerable<IAnalyser> Analysers { get; } = Array.Empty<IAnalyser>();
 
     private readonly JetbrainsProduct _product;
-    private string _filePath;
+    private List<string> _filePaths;
     private string? _outputFolder;
 
     public JetbrainsDiagnoser(JetbrainsProduct product, string? outputFolder = null)
     {
         _product = product;
-        _filePath = string.Empty;
+        _filePaths = new List<string>();
         _outputFolder = outputFolder;
         switch (_product)
         {
@@ -53,15 +53,16 @@ internal class JetbrainsDiagnoser : IDiagnoser
     {
         if (signal == HostSignal.BeforeActualRun)
         {
-            var outputFolder = _outputFolder ?? Environment.CurrentDirectory;
+            var outputFolder = _outputFolder ?? parameters.Config.ArtifactsPath;
+            var filePath = Path.Combine(outputFolder, parameters.BenchmarkCase.Descriptor.FolderInfo.Replace(".", "_") + $"_{DateTime.UtcNow:yyyy_MM_dd_HH_mm_ss}");
             switch (_product)
             {
                 case JetbrainsProduct.Memory:
-                    DotMemory.Attach(new DotMemory.Config().SaveToDir(outputFolder));
+                    DotMemory.Attach(new DotMemory.Config().SaveToFile(filePath + ".dmw"));
                     DotMemory.GetSnapshot("Start");
                     break;
                 case JetbrainsProduct.Trace:
-                    DotTrace.Attach(new DotTrace.Config().SaveToDir(outputFolder));
+                    DotTrace.Attach(new DotTrace.Config().SaveToFile(filePath + ".dtp"));
                     DotTrace.StartCollectingData();
                     break;
             }
@@ -72,12 +73,11 @@ internal class JetbrainsDiagnoser : IDiagnoser
             {
                 case JetbrainsProduct.Memory:
                     DotMemory.GetSnapshot("End");
-                    _filePath = DotMemory.Detach();
+                    _filePaths.Add(DotMemory.Detach());
                     break;
                 case JetbrainsProduct.Trace:
-                    DotTrace.StopCollectingData();
                     DotTrace.SaveData();
-                    _filePath = DotTrace.GetCollectedSnapshotFilesArchive(true);
+                    _filePaths.AddRange(DotTrace.GetCollectedSnapshotFiles());
                     DotTrace.Detach();
                     break;
             }
@@ -91,7 +91,11 @@ internal class JetbrainsDiagnoser : IDiagnoser
 
     public void DisplayResults(ILogger logger)
     {
-        logger.WriteLine(LogKind.Statistic, $"Jetbrains workspace filepath: {_filePath}");
+        logger.WriteLine(LogKind.Statistic, "Jetbrains files:");
+        foreach (var filePath in _filePaths)
+        {
+            logger.WriteLine(LogKind.Statistic, filePath);
+        }
     }
 
     public IEnumerable<ValidationError> Validate(ValidationParameters validationParameters)
